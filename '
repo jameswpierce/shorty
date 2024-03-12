@@ -3,7 +3,7 @@ import {Box, Text, useInput} from 'ink';
 
 import FullScreen from './components/FullScreen.js';
 
-import Modes from './modes/index.js';
+import Modes from './modes'
 
 const modes = {
   INITIAL: 'initial',
