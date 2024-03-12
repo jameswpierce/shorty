@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Box, Text, useInput} from 'ink';
 
 import FullScreen from './components/FullScreen.js';
 
+import shortcut from './lib/shortcut.js';
 import Modes from './modes/index.js';
 
 const modes = {
@@ -30,6 +31,16 @@ function MenuBar() {
 export default function App() {
   const [mode, setMode] = useState(modes.INITIAL);
   const [menubarIsVisible, setMenubarIsVisible] = useState(true)
+  const [currentMember, setCurrentMember] = useState(null);
+
+  useEffect(() => {
+    async function fetchCurrentMember() {
+      const { data } = await shortcut.member();
+      setCurrentMember(data);
+    }
+
+    fetchCurrentMember();
+  }, []);
 
   useInput((input, key) => {
     if (input === 'q') {
@@ -53,9 +64,9 @@ export default function App() {
   return (
     <FullScreen>
       <Box height="100%" width="100%" flexDirection="column">
-        {mode === modes.INITIAL && <Modes.Initial />}
-        {mode === modes.MY_STORIES && <Modes.MyStories />}
-        {mode === modes.SEARCH_STORIES && <Modes.SearchStories />}
+        {mode === modes.INITIAL && <Modes.Initial currentMember={currentMember} />}
+        {mode === modes.MY_STORIES && <Modes.MyStories currentMember={currentMember} />}
+        {mode === modes.SEARCH_STORIES && <Modes.SearchStories currentMember={currentMember} />}
         {menubarIsVisible && <MenuBar />}
       </Box>
     </FullScreen>

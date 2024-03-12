@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const { SHORTCUT_TOKEN } = process.env;
 const SHORTCUT_API_BASE_URL = 'https://api.app.shortcut.com';
 
@@ -16,14 +18,21 @@ const request = async (path, data) => {
   return response;
 }
 
+const member = async () => {
+  const response = await request('/api/v3/member');
+
+  return response;
+}
+
 const search = {
-  stories: (query) => {
-    const response = request('/api/v3/search/stories', { query });
-    console.log(response);
-    return response.data;
+  stories: async (query) => {
+    const response = await request('/api/v3/search/stories', { page_size: 25, query });
+
+    return response;
   }
 }
 
 export default {
+  member,
   search
 }

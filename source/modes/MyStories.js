@@ -1,16 +1,41 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Text, useInput} from 'ink';
+import {Box, Text, useFocusManager, useInput} from 'ink';
 import shortcut from '../lib/shortcut.js';
+import Story from '../components/Story.js';
 
-export default function MyStories(currentUser) {
+export default function MyStories({ currentMember }) {
+  const [lastRefreshed, setLastRefreshed] = useState(new Date().toLocaleString())
   const [stories, setStories] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
-    setStories(shortcut.search.stories(`owner:${currentUser.mention_name}`))
-  }, []);
+    async function fetchMyStories() {
+      const { data } = await shortcut.search.stories(`owner:${currentMember.mention_name}`)
+      setStories(data.data);
+    }
+
+    fetchMyStories();
+  }, [lastRefreshed]);
+  const {focusNext, focusPrevious} = useFocusManager();
+
+  useInput((input, key) => {
+    if (input === 'j') {
+      focusNext();
+    }
+
+    if (input === 'k') {
+      focusPrevious();
+    }
+
+    if (input === 'r') {
+      setLastRefreshed(new Date().toLocaleString());
+    }
+  })
 
   return (
-    <Box height="100%" flexDirection="column" justifyContent="center" alignItems="center" >
-      <Text>{JSON.stringify(stories)}</Text>
+    <Box height="100%" flexDirection="column">
+      <Text>Last refreshed: { lastRefreshed }</Text>
+      {error && <Text>{e.message}</Text>}
+      {stories.map((story, i) => <Story story={story} index={i} />)}
     </Box>
   );
 }
