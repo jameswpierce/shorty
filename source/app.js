@@ -46,7 +46,7 @@ export default function App() {
     if (input === 'q') {
       process.exit()
     }
-    if (key.escape) {
+    if (input === 'h') {
       setMenubarIsVisible(!menubarIsVisible);
     }
     if (menubarIsVisible) {

@@ -6,6 +6,7 @@ import Story from '../components/Story.js';
 export default function MyStories({ currentMember }) {
   const [lastRefreshed, setLastRefreshed] = useState(new Date().toLocaleString())
   const [stories, setStories] = useState([]);
+  const [openStory, setOpenStory] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchMyStories() {
@@ -29,13 +30,21 @@ export default function MyStories({ currentMember }) {
     if (input === 'r') {
       setLastRefreshed(new Date().toLocaleString());
     }
+
+    if (openStory !== null && key.escape) {
+      setOpenStory(null);
+    }
   })
+
+  function handleOnInputEnter(story, index) {
+    setOpenStory(index);
+  }
 
   return (
     <Box height="100%" flexDirection="column">
       <Text>Last refreshed: { lastRefreshed }</Text>
       {error && <Text>{e.message}</Text>}
-      {stories.map((story, i) => <Story story={story} index={i} />)}
+      {stories.map((story, i) => <Story story={story} index={i} onInputEnter={handleOnInputEnter} open={openStory == i} />)}
     </Box>
   );
 }

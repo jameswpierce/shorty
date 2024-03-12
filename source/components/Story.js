@@ -1,8 +1,14 @@
 import React from 'react';
-import { Text, useFocus } from 'ink';
+import { Text, useFocus, useInput } from 'ink';
 
-export default function Story({ story, index }) {
+export default function Story({ story, index, open, onInputEnter }) {
   const {isFocused} = useFocus();
 
-  return <Text bold={isFocused} color={isFocused ? 'magenta' : 'green'}>[{index}] {story.name}</Text>;
+  useInput((input, key) => {
+    if (isFocused && key.return) {
+      onInputEnter(story, index);
+    }
+  });
+
+  return <Text bold={isFocused} color={open ? 'magenta' : 'blue'}>[{index}] [sc-{story.id}] {story.name}</Text>;
 }
