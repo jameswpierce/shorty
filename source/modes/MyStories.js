@@ -31,7 +31,7 @@ export default function MyStories({ currentMember }) {
       setLastRefreshed(new Date().toLocaleString());
     }
 
-    if (openStory !== null && key.escape) {
+    if (openStory !== null && input === 'x') {
       setOpenStory(null);
     }
   })

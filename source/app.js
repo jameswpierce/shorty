@@ -15,13 +15,13 @@ const modes = {
 function MenuBar() {
   return (
     <Box>
-      <Text backgroundColor="green" color="black">
+      <Text backgroundColor="magentaBright" color="black">
         [m] my stories
       </Text>
-      <Text backgroundColor="green" color="black">
+      <Text backgroundColor="magentaBright" color="black">
         {'  '}[/] search stories
       </Text>
-      <Text backgroundColor="green" color="black">
+      <Text backgroundColor="magentaBright" color="black">
         {'  '}[q] quit
       </Text>
     </Box>
