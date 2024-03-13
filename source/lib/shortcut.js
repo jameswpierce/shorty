@@ -24,6 +24,19 @@ const member = async () => {
   return response;
 }
 
+const members = {
+  list: async () => {
+    const response = await request('/api/v3/members');
+
+    return response;
+  },
+  get: async (memberPublicId) => {
+    const response = await request(`/api/v3/members/${memberPublicId}`);
+
+    return response;
+  }
+}
+
 const search = {
   stories: async (query) => {
     const response = await request('/api/v3/search/stories', { page_size: 25, query });
@@ -34,5 +47,6 @@ const search = {
 
 export default {
   member,
+  members,
   search
 }
