@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text, useFocus, useInput } from 'ink';
 
-export default function Story({ story, index, open, onInputEnter }) {
+function Story({ story, index, open, onInputEnter }) {
   const {isFocused} = useFocus();
 
   useInput((input, key) => {
@@ -15,4 +15,12 @@ export default function Story({ story, index, open, onInputEnter }) {
       <Text bold={isFocused} color={open ? 'magenta' : 'blue'}>[{index}] [sc-{story.id}] {story.name}</Text>
     </Box>
   );
+}
+
+export default function StoryList({stories, onInputEnter}) {
+    return (
+      <Box height="100%" flexDirection="column">
+        {stories.map((story, i) => <Story key={`story-${i}`} story={story} index={i} onInputEnter={onInputEnter} />)}
+      </Box>
+    );
 }
