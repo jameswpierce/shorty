@@ -12,7 +12,7 @@ function Story({ story, index, open, onInputEnter }) {
 
   return (
     <Box>
-      <Text bold={isFocused} color={open ? 'magenta' : 'blue'}>[{index}] [sc-{story.id}] {story.name}</Text>
+      <Text bold={isFocused} color={isFocused ? 'magenta' : 'blue'}>[{index}] [sc-{story.id}] {story.name}</Text>
     </Box>
   );
 }

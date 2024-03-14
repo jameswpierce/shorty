@@ -45,8 +45,22 @@ const search = {
   }
 }
 
+const workflows = {
+  list: async () => {
+    const response = await request('/api/v3/workflows');
+
+    return response;
+  },
+  get: async (workflowPublicId) => {
+    const response = await request(`/api/v3/workflows/${workflowPublicId}`);
+
+    return response;
+  }
+}
+
 export default {
   member,
   members,
-  search
+  search,
+  workflows
 }
