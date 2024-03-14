@@ -60,7 +60,7 @@ export default function MyStories({ currentMember }) {
   const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchMyStories() {
-      const { data } = await shortcut.search.stories(`owner:${currentMember.mention_name} !state:completed`)
+      const { data } = await shortcut.search.stories(`owner:${currentMember.mention_name} !state:completed !is:archived`)
       setStories(data.data);
     }
 
@@ -97,7 +97,7 @@ export default function MyStories({ currentMember }) {
             <StoryDetails story={stories[openStory]} />
           </Box>
         )}
-        {(openStory == null) && (
+        {(openStory === null) && (
           <Box height="100%" flexDirection="column" overflowY="hidden">
             <Text>Last refreshed: { lastRefreshed }</Text>
             <Box flexDirection="column">
